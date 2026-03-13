@@ -4,7 +4,7 @@
 
 ## acme
 
-This role is to install [acme.sh](https://acme.sh) and conifgure with vault pki.
+
 
 
 
@@ -32,18 +32,18 @@ This role is to install [acme.sh](https://acme.sh) and conifgure with vault pki.
 
 | Name | Module | Has Conditions |
 | ---- | ------ | -------------- |
-| Acme ¦ Create group | ansible.builtin.group | False |
-| Acme ¦ Create user | ansible.builtin.user | False |
-| Acme ¦ Check if acme is installed yet | ansible.builtin.stat | False |
-| Acme ¦ Create directory | ansible.builtin.file | True |
-| Acme ¦ Download acme.sh | ansible.builtin.git | True |
-| Acme ¦ Install acme.sh | ansible.builtin.command | True |
-| Acme ¦ Set PDNS & discord config | ansible.builtin.blockinfile | False |
-| Acme ¦ check for account config | ansible.builtin.stat | False |
-| Acme ¦ Get new EAB keys from vault | community.hashi_vault.vault_write | True |
-| Acme ¦ Register account | ansible.builtin.command | True |
-| Acme ¦ Register acme service | ansible.builtin.copy | False |
-| Acme ¦ Register acme timer | ansible.builtin.copy | False |
+| Create group | ansible.builtin.group | False |
+| Create user | ansible.builtin.user | False |
+| Check if acme is installed yet | ansible.builtin.stat | False |
+| Create directory | ansible.builtin.file | True |
+| Download acme.sh | ansible.builtin.git | True |
+| Install acme.sh | ansible.builtin.command | True |
+| Set PDNS & discord config | ansible.builtin.blockinfile | False |
+| Check for account config | ansible.builtin.stat | False |
+| Get new EAB keys from vault | community.hashi_vault.vault_write | True |
+| Register account | ansible.builtin.command | True |
+| Register acme service | ansible.builtin.copy | False |
+| Register acme timer | ansible.builtin.copy | False |
 
 
 ## Task Flow Graphs
@@ -64,19 +64,19 @@ classDef importRole stroke:#699ba7,stroke-width:2px;
 classDef includeVars stroke:#8e44ad,stroke-width:2px;
 classDef rescue stroke:#665352,stroke-width:2px;
 
-  Start-->|Task| Acme___Create_group0[acme   create group]:::task
-  Acme___Create_group0-->|Task| Acme___Create_user1[acme   create user]:::task
-  Acme___Create_user1-->|Task| Acme___Check_if_acme_is_installed_yet2[acme   check if acme is installed yet]:::task
-  Acme___Check_if_acme_is_installed_yet2-->|Task| Acme___Create_directory3[acme   create directory<br>When: **not acme stat exists**]:::task
-  Acme___Create_directory3-->|Task| Acme___Download_acme_sh4[acme   download acme sh<br>When: **not acme stat exists**]:::task
-  Acme___Download_acme_sh4-->|Task| Acme___Install_acme_sh5[acme   install acme sh<br>When: **not acme stat exists**]:::task
-  Acme___Install_acme_sh5-->|Task| Acme___Set_PDNS___discord_config6[acme   set pdns   discord config]:::task
-  Acme___Set_PDNS___discord_config6-->|Task| Acme___check_for_account_config7[acme   check for account config]:::task
-  Acme___check_for_account_config7-->|Task| Acme___Get_new_EAB_keys_from_vault8[acme   get new eab keys from vault<br>When: **not acme account stat exists**]:::task
-  Acme___Get_new_EAB_keys_from_vault8-->|Task| Acme___Register_account9[acme   register account<br>When: **not acme account stat exists**]:::task
-  Acme___Register_account9-->|Task| Acme___Register_acme_service10[acme   register acme service]:::task
-  Acme___Register_acme_service10-->|Task| Acme___Register_acme_timer11[acme   register acme timer]:::task
-  Acme___Register_acme_timer11-->End
+  Start-->|Task| Create_group0[create group]:::task
+  Create_group0-->|Task| Create_user1[create user]:::task
+  Create_user1-->|Task| Check_if_acme_is_installed_yet2[check if acme is installed yet]:::task
+  Check_if_acme_is_installed_yet2-->|Task| Create_directory3[create directory<br>When: **not acme stat exists**]:::task
+  Create_directory3-->|Task| Download_acme_sh4[download acme sh<br>When: **not acme stat exists**]:::task
+  Download_acme_sh4-->|Task| Install_acme_sh5[install acme sh<br>When: **not acme stat exists**]:::task
+  Install_acme_sh5-->|Task| Set_PDNS___discord_config6[set pdns   discord config]:::task
+  Set_PDNS___discord_config6-->|Task| Check_for_account_config7[check for account config]:::task
+  Check_for_account_config7-->|Task| Get_new_EAB_keys_from_vault8[get new eab keys from vault<br>When: **not acme account stat exists**]:::task
+  Get_new_EAB_keys_from_vault8-->|Task| Register_account9[register account<br>When: **not acme account stat exists**]:::task
+  Register_account9-->|Task| Register_acme_service10[register acme service]:::task
+  Register_acme_service10-->|Task| Register_acme_timer11[register acme timer]:::task
+  Register_acme_timer11-->End
 ```
 
 

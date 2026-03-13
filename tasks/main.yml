@@ -1,11 +1,11 @@
 ---
-- name: Acme | Create group
+- name: Create group
   become: true
   ansible.builtin.group:
     name: acme
     system: true
 
-- name: Acme | Create user
+- name: Create user
   become: true
   ansible.builtin.user:
     name: acme
@@ -16,12 +16,12 @@
     create_home: true
     home: /opt/acme
 
-- name: Acme | Check if acme is installed yet
+- name: Check if acme is installed yet
   register: acme
   ansible.builtin.stat:
     path: /opt/acme/acme.sh
 
-- name: Acme | Create directory
+- name: Create directory
   when: not acme.stat.exists
   become: true
   ansible.builtin.file:
@@ -31,7 +31,7 @@
     mode: "0775"
     state: directory
 
-- name: Acme | Download acme.sh
+- name: Download acme.sh
   become: true
   when: not acme.stat.exists
   ansible.builtin.git:
@@ -40,7 +40,7 @@
     depth: 1
     version: "{{ acme_version }}"
 
-- name: Acme | Install acme.sh
+- name: Install acme.sh
   become: true
   become_user: acme
   changed_when: true
@@ -59,7 +59,7 @@
   args:
     chdir: /tmp/acme
 
-- name: Acme | Set PDNS & discord config
+- name: Set PDNS & discord config
   become: true
   become_user: acme
   ansible.builtin.blockinfile:
@@ -73,13 +73,13 @@
       SAVED_DISCORD_WEBHOOK_URL="{{ acme_discord_webhook_url }}"
       NOTIFY_HOOK='discord'
 
-- name: Acme | check for account config
+- name: Check for account config
   register: acme_account
   become: true
   ansible.builtin.stat:
     path: "/opt/acme/config/ca/vault.{{ ansible_facts['ansible_domain'] }}/v1/{{ acme_pki_engine }}/roles/{{ acme_pki_role }}/acme/directory/account.json"
 
-- name: Acme | Get new EAB keys from vault
+- name: Get new EAB keys from vault
   delegate_to: localhost
   become: false
   register: eab_info
@@ -87,7 +87,7 @@
   community.hashi_vault.vault_write:
     path: "{{ acme_pki_engine }}/roles/{{ acme_pki_role }}/acme/new-eab"
 
-- name: Acme | Register account
+- name: Register account
   become: true
   become_user: acme
   changed_when: true
@@ -103,7 +103,7 @@
       - --eab-hmac-key
       - "{{ eab_info.data.data.key }}"
 
-- name: Acme | Register acme service
+- name: Register acme service
   become: true
   notify: daemon-reload
   ansible.builtin.copy:
@@ -123,7 +123,7 @@
       # --home's argument should be where the acme.sh script resides.
       ExecStart=/opt/acme/acme.sh --cron --home /opt/acme --config-home /opt/acme/config
 
-- name: Acme | Register acme timer
+- name: Register acme timer
   become: true
   notify: start-acme-timer
   ansible.builtin.copy:
