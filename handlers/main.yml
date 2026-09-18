@@ -1,10 +1,10 @@
 ---
-- name: daemon-reload
+- name: Daemon-reload
   ansible.builtin.systemd_service:
     daemon-reload: true
   become: true
 
-- name: start-acme-timer
+- name: Start-acme-timer
   ansible.builtin.systemd_service:
     name: acme.timer
     state: started

@@ -1,0 +1,13 @@
+galaxy_info:
+  role_name: acme
+  namespace: sirance
+  author: Simon Rance
+  description: >-
+    This ansible role is designed to deploy acme.sh, and configures it to register to a hashicorp vault pki engine
+    It will register a systemd service & timer to run regularly to ensure certificate renewal.
+    It utilises PowerDNS for DNS mode, and will notify to a discord channel via webhook config.
+  company: ""
+  license: MIT
+  min_ansible_version: "2.14"
+  galaxy_tags: []
+dependencies: []

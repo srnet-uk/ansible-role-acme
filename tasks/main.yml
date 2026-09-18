@@ -105,7 +105,7 @@
 
 - name: Register acme service
   become: true
-  notify: daemon-reload
+  notify: Daemon-reload
   ansible.builtin.copy:
     dest: /etc/systemd/system/acme.service
     owner: root
@@ -125,7 +125,7 @@
 
 - name: Register acme timer
   become: true
-  notify: start-acme-timer
+  notify: Start-acme-timer
   ansible.builtin.copy:
     dest: /etc/systemd/system/acme.timer
     owner: root
